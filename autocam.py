@@ -14,6 +14,8 @@ file_prefix = "image_"
 
 # set up the USB drive backup
 usb_directory = "/media/pi/USB/images/"
+if not os.path.exists(usb_directory):
+    os.makedirs(usb_directory)
 
 while True:
     # get the current time
@@ -27,8 +29,11 @@ while True:
     cv2.imwrite(file_name, frame)
 
     # backup the file to USB
-    usb_file_name = usb_directory + file_prefix + current_time + ".jpg"
-    shutil.copy(file_name, usb_file_name)
+    try:
+        usb_file_name = usb_directory + file_prefix + current_time + ".jpg"
+        shutil.copy(file_name, usb_file_name)
+    except:
+        pass
 
     # wait for 30 minutes before taking the next picture
     time.sleep(1800)
