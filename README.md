@@ -1,2 +1,3 @@
 # Autocam
-automatically takes pictures. For Raspberry Pi web and picameras
+Automatically takes pictures every 30min. 
+For Raspberry Pi web and picameras
