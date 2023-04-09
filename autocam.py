@@ -5,7 +5,6 @@ import time
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-cap.set(cv2.CAP_PROP_MODE, 1)
 
 # set up the file name and directory for the images
 directory = "/home/pi/Desktop/images/"
