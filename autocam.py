@@ -12,13 +12,12 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 directory = "/home/pi/Desktop/images/"
 file_prefix = "image_"
 
+# check if the images directory exists, and create it if it doesn't
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
 # set up the USB drive backup
 usb_directory = "/media/pi/USB/images/"
-try:
-    os.makedirs(usb_directory)
-except PermissionError:
-    print("Error: USB drive not found. Backup to USB will be skipped.")
-    pass
 
 while True:
     try:
@@ -32,15 +31,17 @@ while True:
         file_name = directory + file_prefix + current_time + ".jpg"
         cv2.imwrite(file_name, frame)
 
-        # backup the file to USB if USB is available
-        if os.path.isdir(usb_directory):
+        # backup the file to USB if it is connected
+        if os.path.exists("/media/pi/USB"):
             usb_file_name = usb_directory + file_prefix + current_time + ".jpg"
             shutil.copy(file_name, usb_file_name)
 
         # wait for 30 minutes before taking the next picture
         time.sleep(1800)
+
     except cv2.error:
-        print("Error: Failed to capture frame from camera.")
-    except FileNotFoundError:
-        print("Error: USB drive not found. Backup to USB will be skipped.")
+        print("Camera not found")
+        
+    except PermissionError:
+        print("USB drive not found. Backup skipped!")
         pass
