@@ -1,8 +1,8 @@
 # Autocam
 Automatically takes pictures every 30min. 
 For Raspberry Pi web and picameras
-+AutoBackup 
-+AutoLib
+_+AutoBackup_ 
+_+AutoLib_
 
-install: 
-git clone https://github.com/nanocraftmr/Autocam.git
+## Install: 
+git clone `https://github.com/nanocraftmr/Autocam.git`
