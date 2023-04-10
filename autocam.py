@@ -17,23 +17,14 @@ if not os.path.exists(directory):
     os.makedirs(directory)
 
 # set up the USB drive backup
-usb_directory = ""
-
-# get a list of all mounted USB drives
-usb_drives = [os.path.join("/media/pi", f) for f in os.listdir("/media/pi") if os.path.isdir(os.path.join("/media/pi", f))]
-
-# find the first available USB drive and set the backup directory
-for drive in usb_drives:
-    try:
-        test_directory = os.path.join(drive, "images")
-        if os.path.exists(test_directory):
-            usb_directory = os.path.join(test_directory, "")
-            break
-    except:
-        pass
-
-if not usb_directory:
-    print("Error: USB drive not found.")
+usb_path = "/media/pi/"
+usb_folder = next((folder for folder in os.listdir(usb_path) if os.path.isdir(os.path.join(usb_path, folder))), None)
+if usb_folder:
+    usb_directory = os.path.join(usb_path, usb_folder, "images")
+    if not os.path.exists(usb_directory):
+        os.makedirs(usb_directory)
+else:
+    usb_directory = None
 
 while True:
     try:
@@ -44,12 +35,12 @@ while True:
         ret, frame = cap.read()
 
         # save the frame as an image file
-        file_name = directory + file_prefix + current_time + ".jpg"
+        file_name = os.path.join(directory, file_prefix + current_time + ".jpg")
         cv2.imwrite(file_name, frame)
 
         # backup the file to USB if it is connected
         if usb_directory:
-            usb_file_name = usb_directory + file_prefix + current_time + ".jpg"
+            usb_file_name = os.path.join(usb_directory, file_prefix + current_time + ".jpg")
             shutil.copy(file_name, usb_file_name)
 
         # wait for 30 minutes before taking the next picture
