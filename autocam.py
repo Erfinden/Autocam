@@ -2,21 +2,26 @@ import cv2
 import time
 import shutil
 import os
+import ansyncio
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
-# set up the camera
+#### Setting up the Camara Resolution and Connection
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+###########
 
-# set up the file name and directory for the images
+#### Setting the Variables for the Filename and the Folder
 directory = "/home/pi/Desktop/images/"
 file_prefix = "image_"
+############
 
-# check if the images directory exists, and create it if it doesn't
+##### Check if the Folder already exsists, and if not create it
 if not os.path.exists(directory):
     os.makedirs(directory)
+#############
 
-# set up the USB drive backup
+#### Settig up USB as a storage solution
 usb_path = "/media/pi/"
 usb_folder = next((folder for folder in os.listdir(usb_path) if os.path.isdir(os.path.join(usb_path, folder))), None)
 if usb_folder:
@@ -25,25 +30,27 @@ if usb_folder:
         os.makedirs(usb_directory)
 else:
     usb_directory = None
+########
 
+#### Making the Main Loop for the Capturing
 while True:
     try:
-        # get the current time
+        # Get The current Timestamp 
         current_time = time.strftime("%Y-%m-%d-%H-%M-%S", time.gmtime())
 
-        # capture a frame from the camera
+        # Get an single Fram from the Camara
         ret, frame = cap.read()
 
-        # save the frame as an image file
+        # Save the image into the Directory 
         file_name = os.path.join(directory, file_prefix + current_time + ".jpg")
         cv2.imwrite(file_name, frame)
 
-        # backup the file to USB if it is connected
+        # Copy the Image to the USB Device
         if usb_directory:
             usb_file_name = os.path.join(usb_directory, file_prefix + current_time + ".jpg")
             shutil.copy(file_name, usb_file_name)
 
-        # wait for 30 minutes before taking the next picture
+        # Let the code sleep for 1800 Secconds (30 Minutes)
         time.sleep(1800)
 
     except cv2.error:
