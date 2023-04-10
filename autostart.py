@@ -10,7 +10,7 @@ try:
         if not script_path in content:
             f.seek(0, 2)
             f.write("\n# start Autocam on boot\n")
-            f.write("sudo python3 " + script_path + " &\n")
+            f.write("python3 " + script_path + " &\n")
             f.write("# end Autocam on boot\n")
 except Exception as e:
     print("Error adding script to rc.local:", e)
