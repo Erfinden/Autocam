@@ -1,45 +1,63 @@
+import cv2
+import time
+import shutil
+import os
+
+# set up the camera
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
+# set up the file name and directory for the images
+directory = "/home/pi/Desktop/images/"
+file_prefix = "image_"
+
+# check if the images directory exists, and create it if it doesn't
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
 # set up the USB drive backup
-usb_directory = None
-for root, dirs, files in os.walk('/media/pi/'):
-    for dir in dirs:
-        usb_directory = os.path.join(root, dir)
-        break
-    if usb_directory is not None:
-        break
+usb_directory = ""
 
-if usb_directory is None:
-    print("Warning: No USB drive found.")
+# get a list of all mounted USB drives
+usb_drives = [os.path.join("/media/pi", f) for f in os.listdir("/media/pi") if os.path.isdir(os.path.join("/media/pi", f))]
 
-else:
-    usb_directory = os.path.join(usb_directory, 'images')
+# find the first available USB drive and set the backup directory
+for drive in usb_drives:
+    try:
+        test_directory = os.path.join(drive, "images")
+        if os.path.exists(test_directory):
+            usb_directory = os.path.join(test_directory, "")
+            break
+    except:
+        pass
 
-    if not os.path.exists(usb_directory):
-        os.makedirs(usb_directory)
-        print("Created backup directory at {}".format(usb_directory))
+if not usb_directory:
+    print("Error: USB drive not found.")
 
-    while True:
-        try:
-            # get the current time
-            current_time = time.strftime("%Y-%m-%d-%H-%M-%S", time.gmtime())
+while True:
+    try:
+        # get the current time
+        current_time = time.strftime("%Y-%m-%d-%H-%M-%S", time.gmtime())
 
-            # capture a frame from the camera
-            ret, frame = cap.read()
+        # capture a frame from the camera
+        ret, frame = cap.read()
 
-            # save the frame as an image file
-            file_name = directory + file_prefix + current_time + ".jpg"
-            cv2.imwrite(file_name, frame)
+        # save the frame as an image file
+        file_name = directory + file_prefix + current_time + ".jpg"
+        cv2.imwrite(file_name, frame)
 
-            # backup the file to USB if it is connected
-            if usb_directory is not None:
-                usb_file_name = os.path.join(usb_directory, file_prefix + current_time + ".jpg")
-                shutil.copy(file_name, usb_file_name)
+        # backup the file to USB if it is connected
+        if usb_directory:
+            usb_file_name = usb_directory + file_prefix + current_time + ".jpg"
+            shutil.copy(file_name, usb_file_name)
 
-            # wait for 30 minutes before taking the next picture
-            time.sleep(1800)
+        # wait for 30 minutes before taking the next picture
+        time.sleep(1800)
 
-        except cv2.error:
-            print("Error: Failed to capture frame from camera.")
+    except cv2.error:
+        print("Error: Failed to capture frame from camera.")
         
-        except PermissionError:
-            print("Error: Permission denied. Backup unsuccessful.")
-            pass
+    except PermissionError:
+        print("Error: Permission denied. USB drive not found.")
+        pass
