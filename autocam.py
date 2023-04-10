@@ -2,6 +2,7 @@ import cv2
 import time
 import shutil
 import os
+import psutil
 
 # set up the camera
 cap = cv2.VideoCapture(0)
@@ -16,9 +17,14 @@ file_prefix = "image_"
 if not os.path.exists(directory):
     os.makedirs(directory)
 
-# set up the USB drive backup
-usb_directory = "/media/pi/USB/images/"
+# search for available USB drives and set up the backup directory
+usb_directory = None
+for drive in psutil.disk_partitions():
+    if 'removable' in drive.opts:
+        usb_directory = drive.mountpoint + "/images/"
+        break
 
+# main loop
 while True:
     try:
         # get the current time
@@ -31,17 +37,19 @@ while True:
         file_name = directory + file_prefix + current_time + ".jpg"
         cv2.imwrite(file_name, frame)
 
-        # backup the file to USB if it is connected
-        if os.path.exists("/media/pi/USB"):
+        # backup the file to USB if available
+        if usb_directory is not None:
             usb_file_name = usb_directory + file_prefix + current_time + ".jpg"
+            if not os.path.exists(usb_directory):
+                os.makedirs(usb_directory)
             shutil.copy(file_name, usb_file_name)
 
         # wait for 30 minutes before taking the next picture
         time.sleep(1800)
 
     except cv2.error:
-        print("Camera not found")
-        
+        print("Camera Error.")
+
     except PermissionError:
-        print("USB drive not found. Backup skipped!")
+        print("No USB drive not found. Backup skipped!")
         pass
