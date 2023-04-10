@@ -1,5 +1,9 @@
 # Raspberry Pi Camera Backup Script
 
+## Install
+
+Run: `git clone https://github.com/nanocraftmr/Autocam.git`
+
 ## Usage
 
 1. Connect the camera to the Raspberry Pi.
