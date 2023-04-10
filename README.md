@@ -21,6 +21,10 @@ Run: `git clone https://github.com/nanocraftmr/Autocam.git`
 - USB drive
 - OpenCV
 
+## Start on Boot
+
+`sudo python3 autostart.py`
+
 ## Camera Test
  
 - To test, if the camera is working, type: `python3 cam_test.py`
