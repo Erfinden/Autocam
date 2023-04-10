@@ -3,6 +3,7 @@ import time
 import shutil
 import os
 import asyncio
+from threading import Thread
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 #### Colors for console Output
@@ -60,8 +61,27 @@ else:
     usb_directory = None
 ########
 
+#### Defining Webserver
+class MyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(bytes("<html><head><title>AutoCam</title></head>", "utf-8"))
+        self.wfile.write(bytes("<body>", "utf-8"))
+        self.wfile.write(bytes("<p>Test</p>", "utf-8"))
+        self.wfile.write(bytes("</body></html>", "utf-8"))
+########
+
+#### Webserver Function to start it 
+def WebServerStart():
+    webServer = HTTPServer((hostName, serverPort), MyServer)
+    print("Server started http://%s:%s" % (hostName, serverPort))
+#########
+
 #### Making the Main Loop for the Capturing
 while (running == True):
+    thread = Thread(target=WebServerStart())
     try:
         # Get The current Timestamp 
         current_time = time.strftime("%Y-%m-%d-%H-%M-%S", time.gmtime())
