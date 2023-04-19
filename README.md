@@ -23,12 +23,13 @@ Run: `git clone https://github.com/nanocraftmr/Autocam.git`
 
 ## Setup Local Server
 
-`sudo ln -s /home/pi/Desktop/images /var/www/html/autocamserver/images` \n
-`sudo cp /home/pi/Desktop/Autocam/server.php /var/www/html/autocamserver/`
+1. `sudo ln -s /home/pi/Desktop/images /var/www/html/autocamserver/images`
+2. `sudo cp /home/pi/Desktop/Autocam/server.php /var/www/html/autocamserver/`
 
-The Server is now accessible through the ip of the pi.\n
-You need to be in the same wifi as the pi. \n
-To find out the pi adress of the pi type: `ip a` \n
+The Server is now accessible through the ip of the pi. 
+You need to be in the same wifi as the pi!
+- ip example: "0.0.0.0/autocamserver"
+- To find out the pi adress of the raspberrypi type: `ip a`
 
 ## Start on Boot
 
