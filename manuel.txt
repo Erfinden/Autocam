@@ -23,7 +23,7 @@ sudo raspi-config
 
 	install Autocam:
 
-git clone https://github.com/nanocraftmr/Autocam.git
+sudo su -c "cd /var/www/html && git clone https://github.com/nanocraftmr/Autocam.git && mv Autocam/* . && rm -rf Autocam"
 
 cd Autocam
 
@@ -39,7 +39,7 @@ sudo chmod -R 755 /home/pi/Desktop/images/
 sudo ln -s /home/pi/Desktop/images /var/www/html/autocamserver/images
 sudo cp /home/pi/Desktop/Autocam/server.php /var/www/html/autocamserver/
 
-#add own icon to website:
+#add custom icon to website:
 cd /var/www/html/autocamserver/
 here paste in your logo.png file
 
