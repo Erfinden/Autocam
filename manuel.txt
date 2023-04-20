@@ -37,6 +37,7 @@ sudo apt-get install apache2
 sudo apt-get install php
 sudo chmod -R 755 /home/pi/Desktop/images/
 sudo ln -s /home/pi/Desktop/images /var/www/html/autocamserver/images
+sudo cp /home/pi/Desktop/Autocam/server.php /var/www/html/autocamserver/
 
 #add own icon to website:
 cd /var/www/html/autocamserver/
