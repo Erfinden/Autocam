@@ -39,6 +39,9 @@ You need to be in the same wifi as the pi!
  
 - To test, if the camera is working, type: `python3 cam_test.py`
 
+# In Depth Guide [manuel.txt](https://raw.githubusercontent.com/nanocraftmr/Autocam/main/manuel.txt)
+
+
 ## Notes
 
 - If the folder `images` doesn't exist on the USB drive, the script will create it automatically.
