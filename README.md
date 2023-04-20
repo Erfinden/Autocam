@@ -39,7 +39,7 @@ You need to be in the same wifi as the pi!
  
 - To test, if the camera is working, type: `python3 cam_test.py`
 
-# In Depth Guide [manuel.txt](https://raw.githubusercontent.com/nanocraftmr/Autocam/main/manuel.txt)
+# In Depth Guide [manuel.txt](https://github.com/nanocraftmr/Autocam/blob/main/manuel.txt)
 
 
 ## Notes
