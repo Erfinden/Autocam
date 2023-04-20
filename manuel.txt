@@ -27,9 +27,9 @@ git clone https://github.com/nanocraftmr/Autocam.git
 
 cd Autocam
 
-python3 autocam.py
+sudo python3 autocam.py
 
-sudo chmod 777 /home/pi/Desktop/images/
+
 
 	setup webserver:
 
