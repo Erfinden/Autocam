@@ -1,5 +1,6 @@
-# Raspberry Pi Camera Backup Script
-
+# Autocam
+Autocam is a script for Raspberry Pi that captures an image from the camera every 30 minutes and saves it to a USB drive. It also backs up the images to the USB drive and to the desktop folder if the USB drive is not found.
+># [In Depth Guide](https://github.com/nanocraftmr/Autocam/blob/main/manuel.txt)
 ## Install
 
 Run: `git clone https://github.com/nanocraftmr/Autocam.git`
@@ -9,9 +10,9 @@ Run: `git clone https://github.com/nanocraftmr/Autocam.git`
 1. Connect the camera to the Raspberry Pi.
 2. Connect a USB drive to the Raspberry Pi.
 3. Activate legacy camera, using `sudo raspi-config` 
-3. Run the script using `python3 autocam.py`.
-4. The script will capture an image from the camera every 30 minutes and save it to `~/Desktop/images` and backup it to the USB drive.
-5. If the USB drive is not found, the images will just be saved to the desktop folder `~/Desktop/images`.
+3. Run the script using `cd /var/www/html/autocam && sudo python3 autocam.py`.
+4. The script will capture an image from the camera every 30 minutes and save it to `/var/www/html/images` and backup it to the USB drive.
+5. If the USB drive is not found, the images will just be saved to the images folder.
 6. You may need to change the camera index in the script, e.g. `cap = cv2.VideoCapture(0)` if the camera is not detected.
 7. Press Ctrl+C to stop the script.
 
@@ -23,23 +24,21 @@ Run: `git clone https://github.com/nanocraftmr/Autocam.git`
 
 ## Setup Local Server
 
-1. `sudo ln -s /home/pi/Desktop/images /var/www/html/autocamserver/images`
-2. `sudo cp /home/pi/Desktop/Autocam/server.php /var/www/html/autocamserver/`
+>make sure you have **apache2** and **php** installed
 
-The Server is now accessible through the ip of the pi. 
+The Server is now accessible through the ip of the raspi. 
 You need to be in the same wifi as the pi!
-- ip example: "0.0.0.0/autocamserver"
+- Copy the Ip a browser. example: http://0.0.0.0
 - To find out the pi adress of the raspberrypi type: `ip a`
 
 ## Start on Boot
 
-`sudo python3 autostart.py`
+`cd /var/www/html/autocam && sudo python3 autostart.py`
 
 ## Camera Test
  
-- To test, if the camera is working, type: `python3 cam_test.py`
+- To test, if the camera is working: `cd /var/www/html/autocam && sudo python3 cam_test.py`
 
-# In Depth Guide [manuel.txt](https://github.com/nanocraftmr/Autocam/blob/main/manuel.txt)
 
 
 ## Notes
