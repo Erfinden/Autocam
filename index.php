@@ -124,6 +124,13 @@
         }
         ?>
         </div>
+        <script>
+          // Reload the page every 60 seconds
+          setInterval(function() {
+            location.reload();
+          }, 60000);
+        </script>        
+
 </body>
 </html>
 
