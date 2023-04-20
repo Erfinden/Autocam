@@ -125,10 +125,10 @@
         ?>
         </div>
         <script>
-          // Reload the page every 60 seconds
+          // Reload the page every second
           setInterval(function() {
             location.reload();
-          }, 60000);
+          }, 1000);
         </script>        
 
 </body>
