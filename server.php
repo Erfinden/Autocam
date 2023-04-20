@@ -45,7 +45,7 @@
                         line-height: 1px;
                         font-size: 24px;
                         text-transform: uppercase;
-                        background-image: url("/autocamserver/logo.png");
+                        background-image: url("logo.png");
                         background-size: contain;
                         background-repeat: no-repeat;
                         background-position: center;
@@ -71,12 +71,12 @@
         </style>
 </head>
 <body>
-        <div class="logo"><img src="/autocamserver/logo.png" alt=”logo”></div>
+        <div class="logo"></div>
         <div class="container">
 
         <?php
         // Set the directory where your images are stored
-        $directory = '/home/pi/Desktop/images/';
+        $directory = 'images/';
 
         // Get a list of all files in the directory
         $files = glob($directory . '*.jpg');
@@ -97,10 +97,10 @@
 
             // Determine the status text and color
             if ($diff_minutes < 30) {
-                $status_text = 'Active';
+                $status_text = 'Active, last picture: ' . round($diff_minutes) . ' min';
                 $status_color = 'green';
             } else {
-                $status_text = 'Stopped';
+                $status_text = 'Stopped since ' . round($diff_minutes) . ' min';
                 $status_color = 'red';
             }
 
@@ -109,7 +109,7 @@
 
 
             echo '<h1>Latest Picture</h1>';
-            echo '<img src="/autocamserver/images/' . basename($latest_file) . '" alt="Latest Picture">';
+            echo '<img src="images/' . basename($latest_file) . '" alt="Latest Picture" width="500" height="300">';
             echo '<p>Name: ' . basename($latest_file) . '</p>';
             echo '<p>Time taken: ' . date("Y-m-d H:i:s", $latest_time) . '</p>';
             echo '<p>Current time: ' . date("Y-m-d H:i:s") . '</p>';
