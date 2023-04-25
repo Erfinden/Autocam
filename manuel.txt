@@ -35,6 +35,9 @@ sudo python3 autocam.py
 
 sudo apt-get install apache2
 sudo apt-get install php
+sudo visudo
+www-data ALL=(ALL) NOPASSWD: /usr/bin/python /var/www/html/autocam/autocam.py
+
 
 #add custom icon to website:
 cd /var/www/html/autocamserver/
