@@ -44,7 +44,7 @@ while True:
             shutil.copy(file_name, usb_file_name)
 
         # wait for 30 minutes before taking the next picture
-        time.sleep(1800)
+        time.sleep(10)
 
     except cv2.error:
         print("Error: Failed to capture frame from camera.")
