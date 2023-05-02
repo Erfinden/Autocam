@@ -73,6 +73,10 @@
 <body>
         <div class="logo"></div>
         <div class="container">
+        <form action="control.php" method="post">
+          <button type="submit" name="action" value="start">Start Autocam</button>
+          <button type="submit" name="action" value="stop">Stop Autocam</button>
+        </form>
 
         <?php
         // Set the directory where your images are stored
@@ -105,31 +109,17 @@
             }
 
             // Display the latest file information
-
-
-
-            echo '<h1>Latest Picture</h1>';
             echo '<img src="images/' . basename($latest_file) . '" alt="Latest Picture" width="500" height="300">';
             echo '<p>Name: ' . basename($latest_file) . '</p>';
             echo '<p>Time taken: ' . date("Y-m-d H:i:s", $latest_time) . '</p>';
             echo '<p>Current time: ' . date("Y-m-d H:i:s") . '</p>';
             echo '<p>Status: <span style="color: ' . $status_color . ';">' . $status_text . '</span></p>';
-            echo '</div>';
         } else {
             // No files found
             echo 'No files found!';
-
-
-
         }
         ?>
         </div>
-        <script>
-          // Reload the page every second
-          setInterval(function() {
-            location.reload();
-          }, 1000);
-        </script>        
 
 </body>
 </html>
