@@ -1,0 +1,5 @@
+{
+    "img_dir": "/var/www/html/images/",
+    "usb_path": "/media/pi/",
+    "usb_backup": true
+}
