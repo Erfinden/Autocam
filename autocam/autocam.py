@@ -2,6 +2,10 @@ import cv2
 import time
 import shutil
 import os
+import json
+
+with open('/var/www/html/config.json', 'r') as f:
+    config = json.load(f)
 
 # set up the camera
 cap = cv2.VideoCapture(0)
@@ -9,7 +13,7 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
 # set up the file name and directory for the images
-directory = "/var/www/html/images"
+directory = config['img_dir']
 file_prefix = "image_"
 
 # check if the images directory exists, and create it if it doesn't
@@ -17,12 +21,15 @@ if not os.path.exists(directory):
     os.makedirs(directory)
 
 # set up the USB drive backup
-usb_path = "/media/pi/"
-usb_folder = next((folder for folder in os.listdir(usb_path) if os.path.isdir(os.path.join(usb_path, folder))), None)
-if usb_folder:
-    usb_directory = os.path.join(usb_path, usb_folder, "images")
-    if not os.path.exists(usb_directory):
-        os.makedirs(usb_directory)
+if config.get('usb_backup', False):
+    usb_path = config['usb_path']
+    usb_folder = next((folder for folder in os.listdir(usb_path) if os.path.isdir(os.path.join(usb_path, folder))), None)
+    if usb_folder:
+        usb_directory = os.path.join(usb_path, usb_folder, "images")
+        if not os.path.exists(usb_directory):
+            os.makedirs(usb_directory)
+    else:
+        usb_directory = None
 else:
     usb_directory = None
 
@@ -44,7 +51,7 @@ while True:
             shutil.copy(file_name, usb_file_name)
 
         # wait for 30 minutes before taking the next picture
-        time.sleep(10)
+        time.sleep(1800)
 
     except cv2.error:
         print("Error: Failed to capture frame from camera.")
