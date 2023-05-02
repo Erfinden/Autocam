@@ -1,6 +1,7 @@
 	setup the Raspberry:
 
 https://www.youtube.com/watch?v=Boi4cxHFKwg
+sudo apt-get install pip git
 
 
 
@@ -8,9 +9,7 @@ https://www.youtube.com/watch?v=Boi4cxHFKwg
 
 sudo apt-get update
 
-sudo apt-get install build-essential cmake pkg-config libjpeg-dev libtiff5-dev libjasper-dev libpng-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libfontconfig1-dev libcairo2-dev libgdk-pixbuf2.0-dev libpango1.0-dev libgtk2.0-dev libgtk-3-dev libatlas-base-dev gfortran libhdf5-dev libhdf5-serial-dev libhdf5-103 python3-pyqt5 python3-dev -y
-
-sudo apt-get install python3-opencv
+sudo apt-get install libopencv-dev python3-opencv build-essential cmake pkg-config libjpeg-dev libtiff5-dev libjasper-dev libpng-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libfontconfig1-dev libcairo2-dev libgdk-pixbuf2.0-dev libpango1.0-dev libgtk2.0-dev libgtk-3-dev libatlas-base-dev gfortran libhdf5-dev libhdf5-serial-dev libhdf5-103 python3-pyqt5 python3-dev -y
 
 pip install -U numpy
 
@@ -21,32 +20,30 @@ sudo raspi-config
 --> 3. option --> first option --> navigate finish
 
 
-	install Autocam:
-
-sudo su -c "cd /var/www/html && git clone https://github.com/nanocraftmr/Autocam.git && mv Autocam/* . && rm -rf Autocam"
-
-cd /var/www/html/autocam
-
-sudo python3 autocam.py
-
-
-
 	setup webserver:
 
-sudo apt-get install apache2
-sudo apt-get install php
-sudo visudo
-www-data ALL=(ALL) NOPASSWD: /usr/bin/python /var/www/html/autocam/autocam.py
+sudo apt-get install apache2 php 
+sudo rm /var/www/html/index.html
+sudo chown www-data:www-data /var/www/html/autocam/autocam.py
+sudo chmod +x /var/www/html/autocam/autocam.py
+echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/python3 /var/www/html/autocam/autocam.py, /usr/bin/pkill -f autocam.py" | sudo tee -a /etc/sudoers
 
 
-#add custom icon to website:
+#add own icon to website:
 cd /var/www/html/autocamserver/
 here paste in your logo.png file
 
 
+	install Autocam:
+
+sudo git clone https://github.com/Erfinden/Autocam.git /var/www/html/
 
 
 
-
+	configure config.json:
+sudo nano /var/www/html/config.json 
+	edit img_dir to change image diretory 
+	edit usb_path to change the path where drives to backup are shown
+	edit usb_backup to Enable / Disable Backupping
 
 
