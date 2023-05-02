@@ -68,19 +68,41 @@
                 .stopped .status {
                         color: #FF3333;
                 }
+
+                button {
+                        display: inline-block;
+                        background-color: #333333;
+                        color: #FFFFFF;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 5px;
+                        margin-top: 20px;
+                        font-size: 16px;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                }
+                button:hover {
+                        background-color: #666666;
+                }
+                button:focus {
+                        outline: none;
+                }
+
+
         </style>
 </head>
 <body>
         <div class="logo"></div>
         <div class="container">
-        <form action="control.php" method="post">
-          <button type="submit" name="action" value="start">Start Autocam</button>
-          <button type="submit" name="action" value="stop">Stop Autocam</button>
-        </form>
+
 
         <?php
-        // Set the directory where your images are stored
-        $directory = 'images/';
+        $config = json_decode(file_get_contents('config.json'), true);
+        $config_file = file_get_contents('/var/www/html/config.json');
+        $directory = $index_path . $config['img_dir']; // Set the directory where your images are stored     
+        
+        $autocam_running = shell_exec("ps -ef | grep autocam.py | grep -v grep");
 
         // Get a list of all files in the directory
         $files = glob($directory . '*.jpg');
@@ -100,11 +122,11 @@
             $diff_minutes = (time() - $latest_time) / 60;
 
             // Determine the status text and color
-            if ($diff_minutes < 30) {
-                $status_text = 'Active, last picture: ' . round($diff_minutes) . ' min';
+            if ($autocam_running) {
+                $status_text = 'Active!, last picture: ' . round($diff_minutes) . ' min';
                 $status_color = 'green';
             } else {
-                $status_text = 'Stopped since ' . round($diff_minutes) . ' min';
+                $status_text = 'Not Active!, last picture: ' . round($diff_minutes) . ' min';
                 $status_color = 'red';
             }
 
@@ -119,6 +141,12 @@
             echo 'No files found!';
         }
         ?>
+
+        <form action="control.php" method="post">
+          <button type="submit" name="action" value="start">Start Autocam</button>
+          <button type="submit" name="action" value="stop">Stop Autocam</button>
+        </form>
+
         </div>
 
 </body>
