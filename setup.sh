@@ -31,9 +31,6 @@ sudo nano /var/www/html/config.json
 # Restart Avahi daemon service
 sudo systemctl restart avahi-daemon.service
 
-# Activate legacy camera
-sudo vcgencmd enable_camera
-
 # Display success message
 echo "Autocam setup complete!"
 sleep 1
