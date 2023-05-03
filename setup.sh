@@ -32,7 +32,7 @@ sudo nano /var/www/html/config.json
 sudo systemctl restart avahi-daemon.service
 
 # Activate legacy camera
-sudo raspi-config nonint do_camera 0
+sudo vcgencmd enable_camera
 
 # Display success message
 echo "Autocam setup complete!"
