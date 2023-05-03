@@ -8,4 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $output = shell_exec('sudo pkill -f autocam.py');
     echo "Stopped process";
   }
+  
+  header("Location: index.php");
+  exit();
+
 }
