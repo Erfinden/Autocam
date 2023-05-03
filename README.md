@@ -21,12 +21,12 @@ Run:
 - Fully Set up Raspberry Pi 
 - USB drive (optional)
 - OpenCV
-- Internet
-
+- Internet 
+    1. Pug in Lan Cable
+    1. Setup Wifi in advanced options in the raspberry pi imager. / sudo raspi-config > Network Options > Wifi 
 ## Camera Test
  
 - Test, if camera is working: `sudo python3 /var/www/html/autocam/cam_test.py`
-
 
 
 ## Notes
