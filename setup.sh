@@ -24,7 +24,7 @@ echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/python3 /var/www/html/autocam/autoca
 sudo sed -i 's/#domain-name=/domain-name=/g' /etc/avahi/avahi-daemon.conf && sudo sed -i 's/^domain-name=.*/domain-name=local/g' /etc/avahi/avahi-daemon.conf
 
 # Edit hostname for custom .local ip
-sudo raspi-config nonint do_hostname <autocam>
+sudo raspi-config nonint do_hostname autocam
 
 # Edit config.json file
 sudo nano /var/www/html/config.json
@@ -35,3 +35,4 @@ sudo systemctl restart avahi-daemon.service
 # Display success message
 echo "Autocam setup complete!"
 
+sudo reboot
