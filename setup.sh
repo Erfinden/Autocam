@@ -11,7 +11,6 @@ sudo mkdir /media/pi/
 # Clone Autocam repository to /var/www/html/
 sudo git clone https://github.com/Erfinden/Autocam.git /var/www/html/
 
-
 # Remove default Apache2 index page
 sudo rm /var/www/html/index.html
 
@@ -32,7 +31,10 @@ sudo raspi-config nonint do_hostname autocam
 sudo nano /var/www/html/config.json
 
 # Restart Avahi daemon service
-sudo systemctl restart avahi-daemon.service 
+sudo systemctl restart avahi-daemon.service
+
+# Activate legacy camera
+sudo sh -c "echo 'start_x=1' >> /boot/config.txt" && sudo sed -i 's/fixup_file=vc4.*dat/fixup_file=vc4-fkms-v3d.dtbo/g' /boot/config.txt && sudo reboot
 
 # Display success message
 echo "Autocam setup complete!"
