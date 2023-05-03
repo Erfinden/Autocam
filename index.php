@@ -2,6 +2,13 @@
 <html>
 <head>
         <title>Autocam Webserver</title>
+        <script>
+            setInterval(function(){
+                location.reload();
+            }, 5000);
+        </script>
+
+     
         <style>
                 body {
                         margin: 0;
@@ -146,6 +153,16 @@
           <button type="submit" name="action" value="start">Start Autocam</button>
           <button type="submit" name="action" value="stop">Stop Autocam</button>
         </form>
+	<p>
+	  IP addresses: <br>
+	  <?php
+	  $ips = array();
+	  exec("/sbin/ifconfig | grep 'inet ' | awk '{print $2}' | grep -v '127.0.0.1'", $ips);
+	  foreach ($ips as $ip) {
+	    echo "$ip<br>";
+	  }
+	  ?>
+	</p>
 
         </div>
 
