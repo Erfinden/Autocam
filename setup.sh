@@ -35,4 +35,12 @@ sudo systemctl restart avahi-daemon.service
 # Display success message
 echo "Autocam setup complete!"
 
+# Display success message
+echo "Autocam setup complete!"
+sleep 1
+echo "rebooting in ...3"
+sleep 1
+echo "rebooting in ...2"
+sleep 1
+echo "rebooting in ...1"
 sudo reboot
