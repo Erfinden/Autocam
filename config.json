@@ -1,5 +1,6 @@
 {
-    "img_dir": "/var/www/html/images/",
-    "usb_path": "/media/pi/",
-    "usb_backup": true
+    "img_dir": "/var/www/html/images/", // path to images directory
+    "usb_path": "/media/pi/", // path to USB storage
+    "usb_backup": true, // enable USB backup
+    "sleep": "1800" // sleep interval in seconds
 }
