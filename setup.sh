@@ -9,7 +9,7 @@ sudo apt-get install -y python3-pip nano git libopencv-dev python3-opencv build-
 sudo mkdir /media/pi/
 
 # Clone Autocam repository to /var/www/html/
-sudo git clone https://github.com/Erfinden/Autocam.git /var/www/html/
+sudo git clone -v https://github.com/Erfinden/Autocam.git /var/www/html/ 
 
 # Remove default Apache2 index page
 sudo rm /var/www/html/index.html
