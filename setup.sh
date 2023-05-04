@@ -37,8 +37,9 @@ sudo nano /var/www/html/config.json
 sudo systemctl restart avahi-daemon.service
 
 # Activate legacy camera
-if ! grep -q "^start_x=1$" /boot/config.txt; then echo "start_x=1" >> /boot/config.txt; fi
-if ! grep -q "^gpu_mem=128$" /boot/config.txt; then echo "gpu_mem=128" >> /boot/config.txt; fi
+sudo bash -c 'if grep -q "^start_x=" /boot/config.txt; then sed -i "s/^start_x=.*/start_x=1/" /boot/config.txt; else echo "start_x=1" >> /boot/config.txt; fi'
+sudo bash -c 'if grep -q "^gpu_mem=" /boot/config.txt; then sed -i "s/^gpu_mem=.*/gpu_mem=128/" /boot/config.txt; else echo "gpu_mem=128" >> /boot/config.txt; fi'
+
 
 # Display success message
 echo "Autocam setup complete!"
