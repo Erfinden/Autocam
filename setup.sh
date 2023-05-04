@@ -27,6 +27,9 @@ sudo sed -i 's/#domain-name=/domain-name=/g' /etc/avahi/avahi-daemon.conf && sud
 # Edit hostname for custom .local ip
 sudo raspi-config nonint do_hostname autocam
 
+# Fix possible errors in Apache 
+sudo dpkg --configure -a
+
 # Edit config.json file
 sudo nano /var/www/html/config.json
 
