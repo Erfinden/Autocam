@@ -37,7 +37,8 @@ sudo nano /var/www/html/config.json
 sudo systemctl restart avahi-daemon.service
 
 # Activate legacy camera
-sudo sh -c "echo 'start_x=1' >> /boot/config.txt" && sudo sed -i 's/fixup_file=vc4.*dat/fixup_file=vc4-fkms-v3d.dtbo/g' /boot/config.txt && sudo reboot
+if ! grep -q "^start_x=1$" /boot/config.txt; then echo "start_x=1" >> /boot/config.txt; fi
+if ! grep -q "^gpu_mem=128$" /boot/config.txt; then echo "gpu_mem=128" >> /boot/config.txt; fi
 
 # Display success message
 echo "Autocam setup complete!"
