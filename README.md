@@ -1,7 +1,7 @@
 ># [All Commands](https://github.com/nanocraftmr/Autocam/blob/main/manuel.txt)
 ###
 # Autocam
-Autocam is a script for Raspberry Pi that captures an image from the camera every 30 minutes and saves it to a USB drive. It can also if turnt on in config.json back up the images to a Usb drvie. 
+Autocam is a script for Raspberry Pi that captures an image from the camera every 30 minutes and saves it to a USB drive. It can also if turnt on in config.json back up the images to a Usb drvie. Made for Picameras 
 
 ## Install
 
@@ -13,8 +13,7 @@ Run:
 
 1. Connect the camera to the Raspberry Pi.
 2. Connect a USB drive to the Raspberry Pi. (Optional)
-3. You may need to change the camera index in the script, e.g. `cap = cv2.VideoCapture(0)` if the camera is not detected.
-4. connect to autocam.local in your local network to access the site 
+3. connect to autocam.local in your local network to access the site 
 
 ## Requirements
 
