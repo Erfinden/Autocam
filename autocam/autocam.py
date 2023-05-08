@@ -1,16 +1,10 @@
-import cv2
+import subprocess
 import time
-import shutil
 import os
 import json
 
 with open('/var/www/html/config.json', 'r') as f:
     config = json.load(f)
-
-# set up the camera
-cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
 # set up the file name and directory for the images
 directory = config['img_dir']
@@ -38,12 +32,9 @@ while True:
         # get the current time
         current_time = time.strftime("%Y-%m-%d-%H-%M-%S", time.gmtime())
 
-        # capture a frame from the camera
-        ret, frame = cap.read()
-
-        # save the frame as an image file
+        # capture an image using raspistill command
         file_name = os.path.join(directory, file_prefix + current_time + ".jpg")
-        cv2.imwrite(file_name, frame)
+        subprocess.call(["raspistill", "-n", "-ex", "night", "-o", file_name])
 
         # backup the file to USB if it is connected
         if usb_directory:
@@ -53,11 +44,10 @@ while True:
         # wait for 30 minutes before taking the next picture
         time.sleep(int(config['sleep']))
 
-    except cv2.error:
-        print("Error: Failed to capture frame from camera.")
+    except OSError:
+        print("Error: Failed to capture image using raspistill command.")
         time.sleep(1)
 
     except PermissionError:
         print("Error: Permission denied. USB drive not found.")
         time.sleep(1)
-        pass
