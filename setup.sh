@@ -3,7 +3,7 @@
 # Update and install required packages
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get install -y python3-pip nano git libopencv-dev python3-opencv build-essential cmake pkg-config libjpeg-dev libtiff5-dev libjasper-dev libpng-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libfontconfig1-dev libcairo2-dev libgdk-pixbuf2.0-dev libpango1.0-dev libgtk2.0-dev libgtk-3-dev libatlas-base-dev gfortran libhdf5-dev libhdf5-serial-dev libhdf5-103 python3-pyqt5 python3-dev apache2 php 
+sudo apt-get install -y python3-pip nano git build-essential cmake pkg-config python3-dev apache2 php 
 
 
 # Create Usb Path
@@ -37,7 +37,7 @@ sudo nano /var/www/html/config.json
 # Restart Avahi daemon service
 sudo systemctl restart avahi-daemon.service
 
-# Activate legacy camera
+# Activate legacy camera automaticly 
 sudo bash -c 'if grep -q "^start_x=" /boot/config.txt; then sed -i "s/^start_x=.*/start_x=1/" /boot/config.txt; else echo "start_x=1" >> /boot/config.txt; fi'
 sudo bash -c 'if grep -q "^gpu_mem=" /boot/config.txt; then sed -i "s/^gpu_mem=.*/gpu_mem=128/" /boot/config.txt; else echo "gpu_mem=128" >> /boot/config.txt; fi'
 sudo bash -c 'if grep -q "^camera_auto_detect=" /boot/config.txt; then sed -i "s/^camera_auto_detect=.*/#camera_auto_detect=1/" /boot/config.txt; else echo "#camera_auto_detect=1" >> /boot/config.txt; fi'
