@@ -40,6 +40,7 @@ sudo systemctl restart avahi-daemon.service
 # Activate legacy camera
 sudo bash -c 'if grep -q "^start_x=" /boot/config.txt; then sed -i "s/^start_x=.*/start_x=1/" /boot/config.txt; else echo "start_x=1" >> /boot/config.txt; fi'
 sudo bash -c 'if grep -q "^gpu_mem=" /boot/config.txt; then sed -i "s/^gpu_mem=.*/gpu_mem=128/" /boot/config.txt; else echo "gpu_mem=128" >> /boot/config.txt; fi'
+sudo bash -c 'if grep -q "^camera_auto_detect=" /boot/config.txt; then sed -i "s/^camera_auto_detect=.*/#camera_auto_detect=1/" /boot/config.txt; else echo "#camera_auto_detect=1" >> /boot/config.txt; fi'
 
 
 # Display success message
