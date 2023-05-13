@@ -8,6 +8,7 @@ Autocam is a script for Raspberry Pi that captures an image from the camera ever
 Run: 
 `sudo wget https://raw.githubusercontent.com/Erfinden/Autocam/main/setup.sh -O /home/setup.sh && sudo sed -i 's/#domain-name=/domain-name=/g' /etc/avahi/avahi-daemon.conf && sudo sed -i 's/^domain-name=.*/domain-name=local/g' /etc/avahi/avahi-daemon.conf && sudo chmod +x /home/setup.sh && sudo /home/setup.sh
 `
+Note, that you need to run this command multiple times (for me 3 times) 
 
 ## Usage
 
