@@ -150,9 +150,14 @@
         ?>
 
         <form action="control.php" method="post">
-          <button type="submit" name="action" value="start">Start Autocam</button>
-          <button type="submit" name="action" value="stop">Stop Autocam</button>
+          <?php
+            $autocam_running = shell_exec("ps -ef | grep autocam.py | grep -v grep");
+            $start_disabled = $autocam_running ? 'disabled' : '';
+          ?>
+          <button type="submit" name="action" value="start" <?php echo $start_disabled; ?>>Start</button>
+          <button type="submit" name="action" value="stop">Stop</button>
         </form>
+
 	<p>
 	  IP addresses: <br>
 	  <?php
@@ -168,5 +173,3 @@
 
 </body>
 </html>
-
-
