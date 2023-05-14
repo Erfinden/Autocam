@@ -2,5 +2,6 @@
     "img_dir": "/var/www/html/images/", 
     "usb_path": "/media/pi/", 
     "usb_backup": true, 
-    "sleep": "1800" 
+    "sleep": "1800",
+    "server_url": "<server_ip>:5000/upload"
 }
