@@ -98,6 +98,7 @@
 
 
         </style>
+        <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
 <body>
         <div class="logo"></div>
