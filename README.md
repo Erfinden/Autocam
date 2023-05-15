@@ -13,9 +13,12 @@ Note, that you need to run this command multiple times (for me 3 times)
 ## Usage
 
 1. Connect the camera to the Raspberry Pi.
-2. Connect a USB drive to the Raspberry Pi. (Optional)
+2. Connect a USB drive to the Raspberry Pi. (Optional) 
 3. connect to autocam.local in your local network to access the site 
-
+4. Upload Pictures to cloud: <br>
+    -sudo chown -R <user>:<user> /home/
+    -change your username and ip for the server in config.json: `sudo nano /var/www/html/config.json`
+    
 ## Requirements
 
 - Camera conneced to camera port
