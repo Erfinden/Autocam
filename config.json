@@ -3,5 +3,6 @@
     "usb_path": "/media/pi/", 
     "usb_backup": true, 
     "sleep": "1800",
-    "server_url": "<server_ip>:5000/upload"
+    "server_url": "<server_ip>:5000/upload",
+    "username": "<your username>"
 }
