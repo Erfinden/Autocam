@@ -45,7 +45,7 @@ while True:
 
         # Upload the last captured image to the server
         files = {'image': open(file_name, 'rb')}
-        response = requests.post(config['server_url'], files=files)
+        response = requests.post(config['server_url'], files=files, data={'username': config['username']})
 
         # Check the response status
         if response.status_code == 200:
