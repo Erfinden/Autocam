@@ -98,26 +98,37 @@
             
             .config-text {
                 position: relative;
-                color: #333333;
+                color: #3333FF;
                 cursor: help;
+		display: inline-block
             }
 
             .config-popup {
                 position: absolute;
-                top: 100%;
-                left: 0;
+		left: 50%;
+		
                 display: none;
                 width: auto;
-                background-color: #FFFFFF;
+                min-width: 546%;
+		background-color: #FFFFFF;
                 border-radius: 5px;
                 padding: 10px;
                 box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
                 z-index: 1;
+		color: #333333;
+		transform: translateX(-50%);
+  		bottom: calc(100% + 5px);
+		
             }
 
             .config-text:hover .config-popup {
                 display: block;
             }
+
+	    .config-text:hover{
+	    color: transparent;
+
+	    }
         </style>
 
         <link rel="icon" type="image/x-icon" href="favicon.png">
@@ -199,4 +210,3 @@
     </div>
 </body>
 </html>
-           
