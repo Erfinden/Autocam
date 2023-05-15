@@ -8,7 +8,6 @@
             }, 5000);
         </script>
 
-     
         <style>
                 body {
                         margin: 0;
@@ -96,13 +95,36 @@
                         outline: none;
                 }
 
+            
+            .config-text {
+                position: relative;
+                color: #333333;
+                cursor: help;
+            }
 
+            .config-popup {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                display: none;
+                width: auto;
+                background-color: #FFFFFF;
+                border-radius: 5px;
+                padding: 10px;
+                box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+                z-index: 1;
+            }
+
+            .config-text:hover .config-popup {
+                display: block;
+            }
         </style>
+
         <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
 <body>
-        <div class="logo"></div>
-        <div class="container">
+    <div class="logo"></div>
+    <div class="container">
 
 
         <?php
@@ -149,6 +171,9 @@
             echo 'No files found!';
         }
         ?>
+        <div class="config-text">See Config
+            <div class="config-popup"><?php echo nl2br(json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)); ?></div>
+        </div>
 
         <form action="control.php" method="post">
           <?php
@@ -159,18 +184,19 @@
           <button type="submit" name="action" value="stop">Stop</button>
         </form>
 
-	<p>
-	  IP addresses: <br>
-	  <?php
-	  $ips = array();
-	  exec("/sbin/ifconfig | grep 'inet ' | awk '{print $2}' | grep -v '127.0.0.1'", $ips);
-	  foreach ($ips as $ip) {
-	    echo "$ip<br>";
-	  }
-	  ?>
-	</p>
+        <p>
+          IP addresses: <br>
+          <?php
+          $ips = array();
+          exec("/sbin/ifconfig | grep 'inet ' | awk '{print $2}' | grep -v '127.0.0.1'", $ips);
+          foreach ($ips as $ip) {
+            echo "$ip<br>";
+          }
+          ?>
+        </p>
 
-        </div>
 
+    </div>
 </body>
 </html>
+           
