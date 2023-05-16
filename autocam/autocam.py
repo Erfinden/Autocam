@@ -43,15 +43,22 @@ while True:
             usb_file_name = os.path.join(usb_directory, file_prefix + current_time + ".jpg")
             shutil.copy(file_name, usb_file_name)
 
-        # Upload the last captured image to the server
+        # Send the image to the server along with the username and password
         files = {'image': open(file_name, 'rb')}
-        response = requests.post(config['server_url'], files=files, data={'username': config['username']})
+        data = {
+            'username': config['username'],
+            'password': config['password']
+        }
+        response = requests.post(config['server_url'], files=files, data=data)
 
         # Check the response status
         if response.status_code == 200:
-            print('Image uploaded successfully!')
+            if response.text == 'You need to register first!':
+                print('Error: You need to register first!')
+            else:
+                print('Image uploaded successfully!')
         else:
-            print('Failed to upload image: %s' % response.text)
+            print('Failed to upload image:', response.text)
 
         # Wait for the specified time before taking the next picture
         time.sleep(int(config['sleep']))
