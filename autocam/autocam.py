@@ -33,7 +33,7 @@ def capture_and_upload_image(config):
 
             # Capture an image using raspistill command
             file_name = os.path.join(directory, file_prefix + current_time + ".jpg")
-            subprocess.call(["raspistill", "-n", "-ex", "night", "-o", file_name])
+            subprocess.call(["fswebcam", "--no-banner", "-S", "2", file_name])
 
             # Backup the file to USB if it is connected
             if usb_directory:
