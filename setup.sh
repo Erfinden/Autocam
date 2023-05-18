@@ -3,7 +3,7 @@
 # Update and install required packages
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get install -y python3-pip nano git build-essential cmake pkg-config python3-dev apache2 php fswebcam
+sudo apt-get install -y python3-pip nano git build-essential cmake pkg-config python3-dev apache2 php fswebcam python3-requests
 
 
 # Create Usb Path
