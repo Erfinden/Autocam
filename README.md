@@ -1,17 +1,22 @@
 # Autocam
-Autocam is a Python script designed for Raspberry Pi and similar Linux-based mini computers. Its main purpose is to automatically take pictures using a connected camera every 30 minutes. The captured images can be saved to different locations, such as a server, the device's internal storage, or an external USB device.
+>Autocam is a Python script designed for Raspberry Pi and similar Linux-based mini computers. Its main purpose is to automatically take pictures using a connected camera every 30 minutes. The captured images >can be saved to different locations, such as a server, the device's internal storage, or an external USB device.
+>
+>To achieve this functionality, Autocam utilizes the **fswebcam** command-line tool, which allows for efficient image capture. The script provides a configuration file called **config.json**, where users can >easily customize various settings according to their preferences. For example, users can specify the desired video device *(e.g., "video0" or "video1")* and choose where the captured images should be stored.
+>
+>By using Autocam, users can effortlessly automate the process of capturing images on their Raspberry Pi or similar devices. It proves to be a convenient solution for applications like surveillance, time-lapse photography, or monitoring systems.
 
-To achieve this functionality, Autocam utilizes the **fswebcam** command-line tool, which allows for efficient image capture. The script provides a configuration file called **config.json**, where users can easily customize various settings according to their preferences. For example, users can specify the desired video device *(e.g., "video0" or "video1")* and choose where the captured images should be stored.
 
-By using Autocam, users can effortlessly automate the process of capturing images on their Raspberry Pi or similar devices. It proves to be a convenient solution for applications like surveillance, time-lapse photography, or monitoring systems.
+## Installation
+_You might need to run the install command multiple times after restarting_<br>
+**To install Autocam, run the suited command:**
 
+#### *Normal version:* <br>
 
-## Install
+    `sudo wget https://raw.githubusercontent.com/Erfinden/Autocam/main/simplesetup.sh -O /usr/local/simplesetup.sh && sudo bash /usr/local/simplesetup.sh` 
 
-Run: 
-`sudo wget https://raw.githubusercontent.com/Erfinden/Autocam/main/setup.sh -O /home/setup.sh && sudo sed -i 's/#domain-name=/domain-name=/g' /etc/avahi/avahi-daemon.conf && sudo sed -i 's/^domain-name=.*/domain-name=local/g' /etc/avahi/avahi-daemon.conf && sudo chmod +x /home/setup.sh && sudo /home/setup.sh
-`
-Note, that you need to run this command multiple times (for me 3 times) 
+#### *Custom Hostname version:* <br>
+    `sudo wget https://raw.githubusercontent.com/Erfinden/Autocam/main/setup.sh -O /home/setup.sh && sudo sed -i 's/#domain-name=/domain-name=/g' /etc/avahi/avahi-daemon.conf && sudo sed -i 's/^domain-name=.*/domain-name=local/g' /etc/avahi/avahi-daemon.conf && sudo chmod +x /home/setup.sh && sudo /home/setup.sh`
+
 
 ## Usage
 
@@ -23,8 +28,8 @@ Note, that you need to run this command multiple times (for me 3 times)
     
 ## Requirements
 
-- Camera conneced to camera port
-- Fully Set up Raspberry Pi 
+- Camera conneced to camera port or usb port
+- A Setup Minicomputer with Linux, like Raspbian Lite or Armbian: Raspberry Pi / Banana Pi / ... 
 - USB drive (optional)
 - Internet 
     1. Pug in Lan Cable
