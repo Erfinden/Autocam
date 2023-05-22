@@ -24,7 +24,8 @@ _You might need to run the install command multiple times after restarting_<br>
 2. Connect a USB drive to the Raspberry Pi. (Optional) 
 3. connect to autocam.local in your local network to access the site 
 4. Upload Pictures to cloud: <br>
-    -change your username and ip for the server in config.json: `sudo nano /var/www/html/config.json`
+    -update the server ip: `sudo nano /var/www/html/config.json`
+    -you can also update the key in the config file
     
 ## Requirements
 
@@ -32,10 +33,12 @@ _You might need to run the install command multiple times after restarting_<br>
 - A Setup Minicomputer with Linux, like Raspbian Lite or Armbian: Raspberry Pi / Banana Pi / ... 
 - USB drive (optional)
 - Internet 
-    1. Pug in Lan Cable
-    1. Setup Wifi in advanced options in the raspberry pi imager. / sudo raspi-config > Network Options > Wifi  
+    1. Lan with Internet
+    1. Setup Wifi:  
+        -for Raspberry: in advanced options in the raspberry pi imager. / sudo raspi-config > Network Options > Wifi   
+        -for Armbian and other simmalar Linux distributionens: while installation process 
 
 ## Notes
 
-- If the folder `images` doesn't exist on the USB drive or in img_dir, the script will create it automatically.
+- If the folder `images` doesn't exist on the USB drive or in `config[img_dir]`, the script will create it automatically.
 - If you encounter a permission error when running the script, make sure you have the necessary permissions to access the camera and USB drive.
