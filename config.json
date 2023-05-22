@@ -5,5 +5,6 @@
     "sleep": "1800",
     "video_device": "video0",
     "server_url": "<server_ip>:5000",
-    "username": "<your username>"
+    "username": "<your username>",
+    "password": "<your password>"
 }
