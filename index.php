@@ -195,16 +195,17 @@
           <button type="submit" name="action" value="stop">Stop</button>
         </form>
 
-        <p>
-          IP addresses: <br>
-          <?php
-          $ips = array();
-          exec("/sbin/ifconfig | grep 'inet ' | awk '{print $2}' | grep -v '127.0.0.1'", $ips);
-          foreach ($ips as $ip) {
-            echo "$ip<br>";
-          }
-          ?>
-        </p>
+	<p>
+	  IP addresses: <br>
+	  <?php
+	  $ips = array();
+	  exec("/usr/sbin/ip -4 addr show wlan0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'", $ips);
+	  foreach ($ips as $ip) {
+	    echo "$ip<br>";
+	  }
+	  ?>
+	</p>
+
 
 
     </div>
