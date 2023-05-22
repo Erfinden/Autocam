@@ -1,7 +1,10 @@
-># [All Commands](https://github.com/nanocraftmr/Autocam/blob/main/manuel.txt)
-###
 # Autocam
-Autocam is a script for Raspberry Pi that captures an image from the camera every 30 minutes and saves it to a USB drive. It can also if turnt on in config.json back up the images to a Usb drvie. Made for Picameras 
+Autocam is a Python script designed for Raspberry Pi and similar Linux-based mini computers. Its main purpose is to automatically take pictures using a connected camera every 30 minutes. The captured images can be saved to different locations, such as a server, the device's internal storage, or an external USB device.
+
+To achieve this functionality, Autocam utilizes the **fswebcam** command-line tool, which allows for efficient image capture. The script provides a configuration file called **config.json**, where users can easily customize various settings according to their preferences. For example, users can specify the desired video device *(e.g., "video0" or "video1")* and choose where the captured images should be stored.
+
+By using Autocam, users can effortlessly automate the process of capturing images on their Raspberry Pi or similar devices. It proves to be a convenient solution for applications like surveillance, time-lapse photography, or monitoring systems.
+
 
 ## Install
 
