@@ -39,8 +39,7 @@ def capture_and_upload_image(config, scheduler):
 
         files = {'image': open(file_name, 'rb')}
         data = {
-            'username': config['username'],
-            'password': config['password']
+            'key': config['key']
         }
         response = requests.post(config['server_url'] + '/upload', files=files, data=data)
 
