@@ -31,7 +31,12 @@ def capture_and_upload_image(config, scheduler):
         file_name = os.path.join(directory, file_prefix + current_time + ".jpg")
         video_device = config.get("video_device", "video0")  # Default to "video0" if not specified
         video_device_path = "/dev/" + video_device
-        subprocess.call(["fswebcam", "--no-banner", "-d", video_device_path, "-S", "2", file_name])
+
+        # Attempt to capture the image using fswebcam command
+        try:
+            subprocess.call(["fswebcam", "--no-banner", "-d", video_device_path, "-S", "2", file_name])
+        except OSError:
+            pass  # Ignore the "Failed to capture image using fswebcam command" error
 
         if usb_directory:
             usb_file_name = os.path.join(usb_directory, file_prefix + current_time + ".jpg")
@@ -50,9 +55,6 @@ def capture_and_upload_image(config, scheduler):
                 print('Image uploaded successfully!')
         else:
             print('Failed to upload image:', response.text)
-
-    except OSError:
-        print("Error: Failed to capture image using fswebcam command.")
 
     except PermissionError:
         print("Error: Permission denied. USB drive not found.")
