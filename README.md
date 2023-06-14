@@ -12,10 +12,10 @@ _You might need to run the install command multiple times after restarting_<br>
 
 #### *Quick Setup* <br>
 
-    `sudo wget https://raw.githubusercontent.com/Erfinden/Autocam/main/simplesetup.sh -O /usr/local/simplesetup.sh && sudo bash /usr/local/simplesetup.sh` 
+    sudo wget https://raw.githubusercontent.com/Erfinden/Autocam/main/simplesetup.sh -O /usr/local/simplesetup.sh && sudo bash /usr/local/simplesetup.sh
 
 #### *Setup with Custom Hostname* <br>
-    `sudo wget https://raw.githubusercontent.com/Erfinden/Autocam/main/setup.sh -O /home/setup.sh && sudo sed -i 's/#domain-name=/domain-name=/g' /etc/avahi/avahi-daemon.conf && sudo sed -i 's/^domain-name=.*/domain-name=local/g' /etc/avahi/avahi-daemon.conf && sudo chmod +x /home/setup.sh && sudo /home/setup.sh`
+    sudo wget https://raw.githubusercontent.com/Erfinden/Autocam/main/setup.sh -O /home/setup.sh && sudo sed -i 's/#domain-name=/domain-name=/g' /etc/avahi/avahi-daemon.conf && sudo sed -i 's/^domain-name=.*/domain-name=local/g' /etc/avahi/avahi-daemon.conf && sudo chmod +x /home/setup.sh && sudo /home/setup.sh
 
 
 ## Usage
