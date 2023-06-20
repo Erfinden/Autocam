@@ -15,9 +15,11 @@ sudo git clone -v https://github.com/Erfinden/Autocam.git /var/www/html/
 # Remove default Apache2 index page
 sudo rm /var/www/html/index.html
 
-# Update permissions for Autocam.py script and make it executable
+# Update permissions for Autocam.py script and make it executable also for config.json
 sudo chown www-data:www-data /var/www/html/autocam/autocam.py
 sudo chmod +x /var/www/html/autocam/autocam.py
+sudo chown www-data:www-data /var/www/html/config.json
+sudo chmod u+w /var/www/html/config.json
 
 # Add www-data user to sudoers file with permissions to run Autocam.py and pkill command
 echo "www-data ALL=(ALL) NOPASSWD: /usr/bin/python3 /var/www/html/autocam/autocam.py, /usr/bin/pkill -f autocam.py" | sudo tee -a /etc/sudoers
