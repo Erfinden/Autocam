@@ -1,213 +1,95 @@
-<!DOCTYPE html>
-<html>
-<head>
-        <title>Autocam Webserver</title>
-        <script>
-            setInterval(function(){
-                location.reload();
-            }, 5000);
-        </script>
+import subprocess
+import time
+import os
+import json
+import requests
+import shutil
+import sched
+from requests.exceptions import Timeout, ConnectionError, InvalidSchema
 
-        <style>
-                body {
-                        margin: 0;
-                        padding: 0;
-                        background-color: #141414;
-                        font-family: Consolas, sans-serif;
-                }
-                .container {
-                        max-width: 800px;
-                        margin: 0 auto;
-                        padding: 20px;
-                        box-sizing: border-box;
-                        background-color: #FFFFFF;
-                        border-radius: 10px;
-                        box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
-                        text-align: center;
-                }
-                h1 {
-                        margin-top: 0;
-                        font-size: 36px;
-                        color: #333333;
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                }
-                img {
-                        max-width: 100%;
-                        border-radius: 10px;
-                        box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
-                        margin-top: 20px;
-                }
-                .logo {
-                        position: absolute;
-                        top: 20px;
-                        left: 20px;
-                        width: 100px;
-                        height: 100px;
-                        background-color: #333333;
-                        border-radius: 50%;
-                        box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
-                        color: #FFFFFF;
-                        line-height: 1px;
-                        font-size: 24px;
-                        text-transform: uppercase;
-                        background-image: url("logo.png");
-                        background-size: contain;
-                        background-repeat: no-repeat;
-                        background-position: center;
-                }
-                .logo img {
-                        max-width: 100%;
-                        max-height: 100%;
-                        object-fit: cover;
-                }
-                .status {
-                        margin-top: 20px;
-                        font-size: 24px;
-                        font-weight: bold;
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                }
-                .active .status {
-                        color: #33CC33;
-                }
-                .stopped .status {
-                        color: #FF3333;
-                }
+def capture_and_upload_image(config, scheduler):
+    directory = config['img_dir']
+    file_prefix = "image_"
 
-                button {
-                        display: inline-block;
-                        background-color: #333333;
-                        color: #FFFFFF;
-                        padding: 10px 20px;
-                        border: none;
-                        border-radius: 5px;
-                        margin-top: 20px;
-                        font-size: 16px;
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                        cursor: pointer;
-                }
-                button:hover {
-                        background-color: #666666;
-                }
-                button:focus {
-                        outline: none;
-                }
+    if config.get('save_to_drive', True):
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
-            
-            .config-text {
-                position: relative;
-                color: #3333FF;
-                cursor: help;
-		display: inline-block
-            }
+    if config.get('usb_backup', False):
+        usb_path = config['usb_path']
+        usb_folder = next((folder for folder in os.listdir(usb_path) if os.path.isdir(os.path.join(usb_path, folder))), None)
+        if usb_folder:
+            usb_directory = os.path.join(usb_path, usb_folder, "images")
+            if not os.path.exists(usb_directory):
+                os.makedirs(usb_directory)
+        else:
+            usb_directory = None
+    else:
+        usb_directory = None
 
-            .config-popup {
-                position: absolute;
-		left: 50%;
-		
-                display: none;
-                width: auto;
-                min-width: 546%;
-		background-color: #FFFFFF;
-                border-radius: 5px;
-                padding: 10px;
-                box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
-                z-index: 1;
-		color: #333333;
-		transform: translateX(-50%);
-  		bottom: calc(100% + 5px);
-		
-            }
+    try:
+        current_time = time.strftime("%Y-%m-%d-%H-%M-%S", time.gmtime())
 
-            .config-text:hover .config-popup {
-                display: block;
-            }
+        file_name = os.path.join(directory, file_prefix + current_time + ".jpg")
+        video_device = config.get("video_device", "video0")  # Default to "video0" if not specified
+        video_device_path = "/dev/" + video_device
 
-	    .config-text:hover{
-	    color: transparent;
+        # Attempt to capture the image using fswebcam command
+        try:
+            subprocess.call(["fswebcam", "--no-banner", "-d", video_device_path, "-S", "2", file_name])
+        except OSError:
+            pass  # Ignore the "Failed to capture image using fswebcam command" error
 
-	    }
-        </style>
+        if usb_directory:
+            usb_file_name = os.path.join(usb_directory, file_prefix + current_time + ".jpg")
+            shutil.copy(file_name, usb_file_name)
 
-        <link rel="icon" type="image/x-icon" href="favicon.png">
-</head>
-<body>
-    <div class="logo"></div>
-    <div class="container">
-
-
-        <?php
-        $config = json_decode(file_get_contents('config.json'), true);
-        $config_file = file_get_contents('/var/www/html/config.json');
-        $directory = $index_path . $config['img_dir']; // Set the directory where your images are stored     
-        
-        $autocam_running = shell_exec("ps -ef | grep autocam.py | grep -v grep");
-
-        // Get a list of all files in the directory
-        $files = glob($directory . '*.jpg');
-
-        // Sort the files by last modified date, with newest first
-        usort($files, function($a, $b) {
-           return filemtime($b) - filemtime($a);
-        });
-
-        // Check if any files were found
-        if (count($files) > 0) {
-            // Get the latest file
-            $latest_file = $files[0];
-            $latest_time = filemtime($latest_file);
-
-            // Calculate the time difference between now and the latest file
-            $diff_minutes = (time() - $latest_time) / 60;
-
-            // Determine the status text and color
-            if ($autocam_running) {
-                $status_text = 'Active!, last picture: ' . round($diff_minutes) . ' min';
-                $status_color = 'green';
-            } else {
-                $status_text = 'Not Active!, last picture: ' . round($diff_minutes) . ' min';
-                $status_color = 'red';
-            }
-
-            // Display the latest file information
-            echo '<img src="images/' . basename($latest_file) . '" alt="Latest Picture" width="500" height="300">';
-            echo '<p>Name: ' . basename($latest_file) . '</p>';
-            echo '<p>Time taken: ' . date("Y-m-d H:i:s", $latest_time) . '</p>';
-            echo '<p>Current time: ' . date("Y-m-d H:i:s") . '</p>';
-            echo '<p>Status: <span style="color: ' . $status_color . ';">' . $status_text . '</span></p>';
-        } else {
-            // No files found
-            echo 'No files found!';
+        # Upload the image
+        files = {'image': open(file_name, 'rb')}
+        data = {
+            'key': config['key']
         }
-        ?>
-        <div class="config-text">See Config
-            <div class="config-popup"><?php echo nl2br(json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)); ?></div>
-        </div>
 
-        <form action="control.php" method="post">
-          <?php
-            $autocam_running = shell_exec("ps -ef | grep autocam.py | grep -v grep");
-            $start_disabled = $autocam_running ? 'disabled' : '';
-          ?>
-          <button type="submit" name="action" value="start" <?php echo $start_disabled; ?>>Start</button>
-          <button type="submit" name="action" value="stop">Stop</button>
-        </form>
+        try:
+            response = requests.post(config['server_url'] + '/upload', files=files, data=data, timeout=5)
+            if response.status_code == 200:
+                if response.text == 'You need to register first!':
+                    print('Error: You need to register first!')
+                else:
+                    print('Image uploaded successfully!')
+            else:
+                print('Failed to upload image:', response.text)
+        except (Timeout, ConnectionError):
+            print('Error: Cant connect to Server')
+        except InvalidSchema:
+            print('Error: Invalid server IP.')
 
-	<p>
-	  IP addresses: <br>
-	  <?php
-	  $ips = array();
-	  exec("/usr/sbin/ip -4 addr show wlan0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'", $ips);
-	  foreach ($ips as $ip) {
-	    echo "$ip<br>";
-	  }
-	  ?>
-	</p>
+    except PermissionError:
+        print("Error: Permission denied. USB drive not found.")
+
+    # Schedule the deletion of the image if save_to_drive is False
+    if not config.get('save_to_drive', True):
+        def delete_image():
+            if os.path.exists(file_name):
+                os.remove(file_name)
+                print('Image deleted.')
+
+        scheduler.enter(1, 1, delete_image)
+
+    # Schedule the next capture after the specified delay
+    delay = int(config['sleep'])
+    scheduler.enter(delay, 1, capture_and_upload_image, (config, scheduler))
 
 
+# Load the configuration file
+with open('/var/www/html/config.json', 'r') as f:
+    config = json.load(f)
 
-    </div>
-</body>
-</html>
+# Initialize the scheduler
+scheduler = sched.scheduler(time.time, time.sleep)
+
+# Schedule the initial image capture
+scheduler.enter(0, 1, capture_and_upload_image, (config, scheduler))
+
+# Run the scheduler
+scheduler.run()
