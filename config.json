@@ -1,7 +1,8 @@
 {
     "img_dir": "/var/www/html/images/", 
     "usb_path": "/media/pi/", 
-    "usb_backup": true, 
+    "usb_backup": false, 
+    "save_to_drive": false,
     "sleep": "1800",
     "video_device": "video0",
     "server_url": "http://<server_ip>:5000",
