@@ -56,6 +56,20 @@ def capture_and_upload_image(config, scheduler):
         else:
             print('Failed to upload image:', response.text)
 
+        # Print the file path before deletion
+        print("File to be deleted:", file_name)
+
+        # Check if the file exists
+        if os.path.exists(file_name):
+            # Attempt to delete the file
+            try:
+                os.remove(file_name)
+                print("File deleted successfully!")
+            except Exception as e:
+                print("Failed to delete the file:", str(e))
+        else:
+            print("File does not exist:", file_name)
+
     except PermissionError:
         print("Error: Permission denied. USB drive not found.")
 
