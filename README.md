@@ -1,4 +1,4 @@
-# this repo will be archieved, as there is a better, new one
+# this repo will be archieved, as there is a better,  [new one](https://github.com/Erfinden/bunkermessungai-local)
 
 # Autocam
 >Autocam is a Python script designed for Raspberry Pi and similar Linux-based mini computers. Its main purpose is to automatically take pictures using a connected camera every 30 minutes. The captured images >can be saved to different locations, such as a server, the device's internal storage, or an external USB device.
